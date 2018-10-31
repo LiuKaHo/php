@@ -2,8 +2,6 @@ FROM php:7.2-fpm
 
 MAINTAINER liukaho
 
-
-
 RUN apt-get update && apt-get install -y \
     apt-utils \
     git \
