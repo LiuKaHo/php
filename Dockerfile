@@ -12,7 +12,8 @@ RUN apt-get update && apt-get install -y \
     libmemcached-dev \
     libfreetype6-dev \
     libjpeg-dev \
-    libpng-dev 
+    libpng-dev \
+    crontab
 
 
 #install php extensions
