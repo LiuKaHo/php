@@ -13,7 +13,7 @@ RUN apt-get update && apt-get install -y \
     libfreetype6-dev \
     libjpeg-dev \
     libpng-dev \
-    crontab
+    cron
 
 
 #install php extensions
