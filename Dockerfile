@@ -56,7 +56,7 @@ WORKDIR /opt
 RUN usermod -u 1000 www-data
 USER www-data
 
-ENTRYPOINT ["set -e && cron"]
+ENTRYPOINT ["cron"]
 
 EXPOSE 9000
 
