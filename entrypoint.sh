@@ -1,9 +1,4 @@
 #!/bin/bash
 
-#!/bin/bash
-
-set -e
-
-cron
-
-exec "$@"
+cron -f &
+docker-php-entrypoint php-fpm
