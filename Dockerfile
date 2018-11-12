@@ -50,14 +50,24 @@ RUN apt-get install -y supervisor && echo_supervisord_conf
 ADD php.ini /usr/local/etc/php/php.ini
 ADD php-fpm.conf /usr/local/etc/php-fpm.ini
 
-RUN cron
+
 
 WORKDIR /opt
 
-RUN usermod -u 1000 www-data
-USER www-data
 
 
+COPY ./crontab /var/spool/cron/crontabs/root
+RUN chmod 0644 /var/spool/cron/crontabs/root
+RUN crontab /var/spool/cron/crontabs/root
+
+COPY ./entrypoint.sh /usr/local/bin/
+
+RUN chmod 777 /usr/local/bin/entrypoint.sh \
+    && ln -s /usr/local/bin/entrypoint.sh /
+
+ENTRYPOINT ["entrypoint.sh"]
+
+CMD [ "php-fpm" ]
 
 EXPOSE 9000
 
