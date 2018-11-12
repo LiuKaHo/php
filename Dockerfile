@@ -50,13 +50,14 @@ RUN apt-get install -y supervisor && echo_supervisord_conf
 ADD php.ini /usr/local/etc/php/php.ini
 ADD php-fpm.conf /usr/local/etc/php-fpm.ini
 
+RUN cron
 
 WORKDIR /opt
 
 RUN usermod -u 1000 www-data
 USER www-data
 
-ENTRYPOINT ["cron"]
+
 
 EXPOSE 9000
 
