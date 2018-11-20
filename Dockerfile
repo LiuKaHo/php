@@ -13,7 +13,8 @@ RUN apt-get update && apt-get install -y \
     libfreetype6-dev \
     libjpeg-dev \
     libpng-dev \
-    cron
+    cron \
+    rsyslog
 
 
 #install php extensions
@@ -54,6 +55,7 @@ ADD php-fpm.conf /usr/local/etc/php-fpm.ini
 
 WORKDIR /opt
 
+RUN touch /var/log/cron.log
 
 COPY ./entrypoint.sh /usr/local/bin/
 
