@@ -14,6 +14,7 @@ RUN apt-get update && apt-get install -y \
     libjpeg-dev \
     libpng-dev \
     rsyslog \
+    vim \
     cron 
 
 
@@ -53,6 +54,7 @@ ADD php.ini /usr/local/etc/php/php.ini
 ADD php-fpm.conf /usr/local/etc/php-fpm.ini
 
 ADD cron /etc/pam.d/cron
+
 
 WORKDIR /opt
 
