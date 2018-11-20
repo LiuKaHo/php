@@ -1,0 +1,9 @@
+# In addition, read system locale information
+session       sufficient   pam_env.so envfile=/etc/default/locale
+
+@include common-account
+@include common-session-noninteractive
+
+# Sets up user limits, please define limits for cron tasks
+# through /etc/security/limits.conf
+session    sufficient   pam_limits.so

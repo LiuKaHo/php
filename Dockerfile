@@ -52,7 +52,7 @@ RUN apt-get install -y supervisor && echo_supervisord_conf
 ADD php.ini /usr/local/etc/php/php.ini
 ADD php-fpm.conf /usr/local/etc/php-fpm.ini
 
-
+ADD cron /etc/pam.d/cron
 
 WORKDIR /opt
 
