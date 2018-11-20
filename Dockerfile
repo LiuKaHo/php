@@ -59,6 +59,7 @@ RUN touch /var/log/cron.log
 
 COPY ./entrypoint.sh /usr/local/bin/
 
+
 RUN chmod 777 /usr/local/bin/entrypoint.sh \
     && ln -s /usr/local/bin/entrypoint.sh /
 
