@@ -66,6 +66,12 @@ COPY ./entrypoint.sh /usr/local/bin/
 RUN chmod 777 /usr/local/bin/entrypoint.sh \
     && ln -s /usr/local/bin/entrypoint.sh /
 
+RUN touch /var/spool/cron/crontabs/www-data
+RUN echo  "* * * * * /usr/local/bin/php /opt/code/TDAAppointmentBackend/artisan schedule:run" >> /var/spool/cron/crontabs/www-data
+
+RUN usermod -u 1000 www-data
+USER www-data
+
 ENTRYPOINT ["entrypoint.sh"]
 
 EXPOSE 9000
