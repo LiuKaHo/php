@@ -13,9 +13,7 @@ RUN apt-get update && apt-get install -y \
     libfreetype6-dev \
     libjpeg-dev \
     libpng-dev \
-    rsyslog \
-    vim \
-    cron 
+    vim
 
 
 
@@ -53,24 +51,15 @@ RUN apt-get install -y supervisor && echo_supervisord_conf
 ADD php.ini /usr/local/etc/php/php.ini
 ADD php-fpm.conf /usr/local/etc/php-fpm.ini
 
-ADD cron /etc/pam.d/cron
 
 
 WORKDIR /opt
-
-RUN touch /var/log/cron.log
 
 COPY ./entrypoint.sh /usr/local/bin/
 
 
 RUN chmod 777 /usr/local/bin/entrypoint.sh \
     && ln -s /usr/local/bin/entrypoint.sh /
-
-RUN touch /var/spool/cron/crontabs/www-data
-RUN echo  "* * * * * /usr/local/bin/php /opt/code/TDAAppointmentBackend/artisan schedule:run" >> /var/spool/cron/crontabs/www-data
-
-RUN usermod -u 1000 www-data
-USER www-data
 
 ENTRYPOINT ["entrypoint.sh"]
 
