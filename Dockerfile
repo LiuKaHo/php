@@ -61,6 +61,8 @@ COPY ./entrypoint.sh /usr/local/bin/
 RUN chmod 777 /usr/local/bin/entrypoint.sh \
     && ln -s /usr/local/bin/entrypoint.sh /
 
+ADD cacert.pem /usr/local/etc/php/cacert.pem
+
 ENTRYPOINT ["entrypoint.sh"]
 
 EXPOSE 9000
