@@ -38,7 +38,7 @@ RUN php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');" \
 
 
 #install phpunit
-RUN php -r "copy('http://phar.phpunit.cn/phpunit.phar', 'phpunit');" \
+RUN php -r "copy('https://phar.phpunit.de/phpunit-7.phar', 'phpunit');" \
     && chmod +x phpunit \
     && mv phpunit /usr/local/bin/phpunit \
     && phpunit --version
