@@ -13,7 +13,7 @@ RUN apt-get update && apt-get install -y \
     libfreetype6-dev \
     libjpeg-dev \
     libpng-dev \
-    vim
+    supervisor
 
 
 
@@ -45,7 +45,7 @@ RUN php -r "copy('https://phar.phpunit.de/phpunit-7.phar', 'phpunit');" \
 
 
 #install supervisor
-RUN apt-get install -y supervisor && echo_supervisord_conf
+RUN echo_supervisord_conf
 
 #php config files
 ADD php.ini /usr/local/etc/php/php.ini
