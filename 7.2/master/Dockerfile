@@ -23,7 +23,7 @@ RUN apt-get update && apt-get install -y \
 RUN pecl install swoole && echo "extension=swoole.so" > /usr/local/etc/php/conf.d/swoole.ini
 
 
-RUN docker-php-ext-install -j$(nproc)  iconv mysqli zip mbstring pdo_mysql opcache
+RUN docker-php-ext-install -j$(nproc)  iconv mysqli zip mbstring pdo_mysql
 
 
 # install php gd extension
