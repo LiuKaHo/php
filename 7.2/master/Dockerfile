@@ -14,8 +14,7 @@ RUN apt-get update && apt-get install -y \
     libjpeg-dev \
     libpng-dev \
     vim \
-    wget \
-    supervisor
+    wget 
 
 
 
@@ -45,11 +44,6 @@ RUN php -r "copy('https://phar.phpunit.de/phpunit-7.phar', 'phpunit');" \
     && mv phpunit /usr/local/bin/phpunit \
     && phpunit --version
 
-#install xdebug
-RUN git clone https://github.com/xdebug/xdebug.git && cd xdebug && ./rebuild.sh && echo "extension=xdebug.so" > /usr/local/etc/php/conf.d/xdebug.ini
-
-#install supervisor
-RUN echo_supervisord_conf
 
 #php config files
 ADD php.ini /usr/local/etc/php/php.ini
@@ -59,15 +53,9 @@ ADD php-fpm.conf /usr/local/etc/php-fpm.ini
 
 WORKDIR /opt
 
-COPY ./entrypoint.sh /usr/local/bin/
-
-
-RUN chmod 777 /usr/local/bin/entrypoint.sh \
-    && ln -s /usr/local/bin/entrypoint.sh /
 
 ADD cacert.pem /usr/local/etc/php/cacert.pem
 
-ENTRYPOINT ["entrypoint.sh"]
 
-EXPOSE 9000 9001
+EXPOSE 9000
 
