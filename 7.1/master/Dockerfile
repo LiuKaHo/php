@@ -45,9 +45,14 @@ RUN php -r "copy('https://phar.phpunit.de/phpunit-7.phar', 'phpunit');" \
     && phpunit --version
 
 
+#install composer
+RUN composer global require "laravel/installer"
+
 #php config files
 ADD php.ini /usr/local/etc/php/php.ini
 ADD php-fpm.conf /usr/local/etc/php-fpm.ini
+
+
 
 
 
