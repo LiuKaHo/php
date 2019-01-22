@@ -44,8 +44,14 @@ RUN php -r "copy('https://phar.phpunit.de/phpunit-7.phar', 'phpunit');" \
     && mv phpunit /usr/local/bin/phpunit \
     && phpunit --version
 
-#install composer
-RUN composer global require "laravel/installer"
+#install composer and swagger-php
+RUN composer global require laravel/installer && composer global require zircote/swagger-php
+
+
+#add the composer path to PATH
+RUN echo "zircote/swagger-php" >> ~/.bashrc && source ~/.bashrc
+
+
 
 #php config files
 ADD php.ini /usr/local/etc/php/php.ini
