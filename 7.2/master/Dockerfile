@@ -45,15 +45,6 @@ RUN php -r "copy('https://phar.phpunit.de/phpunit-7.phar', 'phpunit');" \
     && mv phpunit /usr/local/bin/phpunit \
     && phpunit --version
 
-#install composer and swagger-php
-RUN composer global require laravel/installer && composer global require zircote/swagger-php
-
-#install overtrue package builder
-RUN composer global require 'overtrue/package-builder' --prefer-source
-
-#add the composer path to PATH
-RUN echo "zircote/swagger-php" >> ~/.bashrc && source ~/.bashrc
-
 
 
 #php config files
