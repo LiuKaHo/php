@@ -1,4 +1,4 @@
-FROM php:7.2-fpm
+FROM php:7.1-fpm
 
 MAINTAINER liukaho
 
@@ -13,8 +13,7 @@ RUN apt-get update && apt-get install -y \
     libfreetype6-dev \
     libjpeg-dev \
     libpng-dev \
-    vim \
-    wget 
+    supervisor
 
 
 
@@ -28,7 +27,6 @@ RUN docker-php-ext-install -j$(nproc)  iconv mysqli zip mbstring pdo_mysql bcmat
 # install php gd extension
 RUN docker-php-ext-configure gd --with-freetype-dir=/usr/include --with-jpeg-dir=/usr/include/ \
     && docker-php-ext-install -j$(nproc) gd
-
 
 
 
@@ -46,6 +44,8 @@ RUN php -r "copy('https://phar.phpunit.de/phpunit-7.phar', 'phpunit');" \
     && phpunit --version
 
 
+#install supervisor
+RUN echo_supervisord_conf
 
 #php config files
 ADD php.ini /usr/local/etc/php/php.ini
@@ -55,9 +55,15 @@ ADD php-fpm.conf /usr/local/etc/php-fpm.ini
 
 WORKDIR /opt
 
+COPY ./entrypoint.sh /usr/local/bin/
+
+
+RUN chmod 777 /usr/local/bin/entrypoint.sh \
+    && ln -s /usr/local/bin/entrypoint.sh /
 
 ADD cacert.pem /usr/local/etc/php/cacert.pem
 
+ENTRYPOINT ["entrypoint.sh"]
 
 EXPOSE 9000
 
