@@ -46,6 +46,8 @@ RUN php -r "copy('https://phar.phpunit.de/phpunit-7.phar', 'phpunit');" \
     && mv phpunit /usr/local/bin/phpunit \
     && phpunit --version
 
+#install overtrue package builder
+RUN composer global require 'overtrue/package-builder' --prefer-source
 
 
 #php config files

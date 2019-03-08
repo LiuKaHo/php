@@ -13,7 +13,6 @@ RUN apt-get update && apt-get install -y \
     libfreetype6-dev \
     libjpeg-dev \
     libpng-dev \
-    supervisor
 
 
 
@@ -43,9 +42,8 @@ RUN php -r "copy('https://phar.phpunit.de/phpunit-7.phar', 'phpunit');" \
     && mv phpunit /usr/local/bin/phpunit \
     && phpunit --version
 
-
-#install supervisor
-RUN echo_supervisord_conf
+#install overtrue package builder
+RUN composer global require 'overtrue/package-builder' --prefer-source
 
 #php config files
 ADD php.ini /usr/local/etc/php/php.ini
@@ -55,15 +53,9 @@ ADD php-fpm.conf /usr/local/etc/php-fpm.ini
 
 WORKDIR /opt
 
-COPY ./entrypoint.sh /usr/local/bin/
-
-
-RUN chmod 777 /usr/local/bin/entrypoint.sh \
-    && ln -s /usr/local/bin/entrypoint.sh /
 
 ADD cacert.pem /usr/local/etc/php/cacert.pem
 
-ENTRYPOINT ["entrypoint.sh"]
 
 EXPOSE 9000
 
