@@ -1,4 +1,4 @@
-FROM php:7.1-fpm
+FROM php:7.3-fpm
 
 MAINTAINER liukaho
 
@@ -13,6 +13,7 @@ RUN apt-get update && apt-get install -y \
     libfreetype6-dev \
     libjpeg-dev \
     libpng-dev \
+    supervisor
 
 
 
@@ -20,7 +21,7 @@ RUN apt-get update && apt-get install -y \
 RUN pecl install swoole && echo "extension=swoole.so" > /usr/local/etc/php/conf.d/swoole.ini
 
 
-RUN docker-php-ext-install -j$(nproc)  iconv mysqli zip mbstring pdo_mysql opcache bcmath
+RUN docker-php-ext-install -j$(nproc)  iconv mysqli zip mbstring pdo_mysql bcmath
 
 
 # install php gd extension
@@ -42,8 +43,9 @@ RUN php -r "copy('https://phar.phpunit.de/phpunit-7.phar', 'phpunit');" \
     && mv phpunit /usr/local/bin/phpunit \
     && phpunit --version
 
-#install overtrue package builder
-RUN composer global require 'overtrue/package-builder' --prefer-source
+
+#install supervisor
+RUN echo_supervisord_conf
 
 #php config files
 ADD php.ini /usr/local/etc/php/php.ini
@@ -53,9 +55,15 @@ ADD php-fpm.conf /usr/local/etc/php-fpm.ini
 
 WORKDIR /opt
 
+COPY ./entrypoint.sh /usr/local/bin/
+
+
+RUN chmod 777 /usr/local/bin/entrypoint.sh \
+    && ln -s /usr/local/bin/entrypoint.sh /
 
 ADD cacert.pem /usr/local/etc/php/cacert.pem
 
+ENTRYPOINT ["entrypoint.sh"]
 
 EXPOSE 9000
 

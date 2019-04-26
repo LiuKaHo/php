@@ -1,4 +1,4 @@
-FROM php:7.1-fpm
+FROM php:7.3-fpm
 
 MAINTAINER liukaho
 
@@ -13,7 +13,9 @@ RUN apt-get update && apt-get install -y \
     libfreetype6-dev \
     libjpeg-dev \
     libpng-dev \
-    supervisor
+    vim \
+    wget 
+
 
 
 
@@ -30,6 +32,7 @@ RUN docker-php-ext-configure gd --with-freetype-dir=/usr/include --with-jpeg-dir
 
 
 
+
 #install composer
 RUN php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');" \ 
           && php -r "if (hash_file('sha384', 'composer-setup.php') === '48e3236262b34d30969dca3c37281b3b4bbe3221bda826ac6a9a62d6444cdb0dcd0615698a5cbe587c3f0fe57a54d8f5') { echo 'Installer verified'; } else { echo 'Installer corrupt'; unlink('composer-setup.php'); } echo PHP_EOL;" \
@@ -43,9 +46,9 @@ RUN php -r "copy('https://phar.phpunit.de/phpunit-7.phar', 'phpunit');" \
     && mv phpunit /usr/local/bin/phpunit \
     && phpunit --version
 
+#install overtrue package builder
+RUN composer global require 'overtrue/package-builder' --prefer-source
 
-#install supervisor
-RUN echo_supervisord_conf
 
 #php config files
 ADD php.ini /usr/local/etc/php/php.ini
@@ -55,15 +58,9 @@ ADD php-fpm.conf /usr/local/etc/php-fpm.ini
 
 WORKDIR /opt
 
-COPY ./entrypoint.sh /usr/local/bin/
-
-
-RUN chmod 777 /usr/local/bin/entrypoint.sh \
-    && ln -s /usr/local/bin/entrypoint.sh /
 
 ADD cacert.pem /usr/local/etc/php/cacert.pem
 
-ENTRYPOINT ["entrypoint.sh"]
 
 EXPOSE 9000
 
