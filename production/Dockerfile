@@ -55,7 +55,7 @@ ADD php-fpm.conf /usr/local/etc/php-fpm.ini
 
 WORKDIR /opt
 
-COPY ./entrypoint.sh /usr/local/bin/
+COPY entrypoint.sh /usr/local/bin/
 
 
 RUN chmod 777 /usr/local/bin/entrypoint.sh \
